@@ -32,11 +32,23 @@ def cumulativeReturnRange(start_bound, end_bound, initial_contribution, annual_c
     else:
         years_ago_start = 2019 - int(start_bound)
         years_ago_end = 2019 - int(end_bound)
-        print(years_ago_start)
-        print(years_ago_end)
         balance = initial_contribution
+        running = 0
+        space = []
+        
         for row in range(years_ago_end - 1, years_ago_start):
-            balance = ((1 + float(data[row]['a_return'])/100) * balance) + annual_contribution
+            space.append(row)
+
+        space = reversed(space)
+        
+        for row in space:
+            print("YEAR : %s" %(data[row]['year']))
+            print("Return Muliplier: %s" %((1 + data[row]['a_return'])/ 100))
+            print("Adjusted contribution : %s" %(float(data[row]['a_return']) * annual_contribution * running))
+            print("Balance: %s" %balance)
+            print("--")
+            balance = ((1 + float(data[row]['a_return'])/100) * balance) + annual_contribution * ((1 + float(data[row]['a_return'])/ 100))
+
         return int(round(balance))
 
 
