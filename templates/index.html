@@ -1,15 +1,111 @@
-<form action = "/series_data">
-    <label>Start Year</label><br>
-    <input name = "start">
-    <br><br>
-    <label>End Year</label><br>
-    <input name = "end">
-    <br><br>
-    <label>Initial Contribution</label><br>
-    <input name = "initial_contrib">
-    <br><br>
-    <label>Annual Contirbution</label><br>
-    <input name = "annual_contrib">
-    <br><br>
-    <input type = "submit" value = "Submit">
-</form>
+<html>
+    <head>
+        <style>
+                .recolor{
+                    background-color: #333 !important;
+                }
+                
+                .slidecontainer {
+                    width: 100%; /* Width of the outside container */
+                    }
+                    
+                    /* The slider itself */
+                    .slider {
+                    -webkit-appearance: none;  /* Override default CSS styles */
+                    appearance: none;
+                    width: 100%; /* Full-width */
+                    height: 25px; /* Specified height */
+                    background: #d3d3d3; /* Grey background */
+                    outline: none; /* Remove outline */
+                    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+                    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+                    transition: opacity .2s;
+                    }
+                    
+                    /* Mouse-over effects */
+                    .slider:hover {
+                    opacity: 1; /* Fully shown on mouse-over */
+                    }
+                    
+                    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+                    .slider::-webkit-slider-thumb {
+                    -webkit-appearance: none; /* Override default look */
+                    appearance: none;
+                    width: 25px; /* Set a specific slider handle width */
+                    height: 25px; /* Slider handle height */
+                    background: #4CAF50; /* Green background */
+                    cursor: pointer; /* Cursor on hover */
+                    }
+                    
+                    .slider::-moz-range-thumb {
+                    width: 25px; /* Set a specific slider handle width */
+                    height: 25px; /* Slider handle height */
+                    background: #4CAF50; /* Green background */
+                    cursor: pointer; /* Cursor on hover */
+                    }
+                </style>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css" media="screen" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+    <body>
+            <div class="jumbotron">
+                    <h1 class="display-4">Troutwood API Prototype</h1>
+                    <p class="lead">Use the input fields below to test the Troutwood S&P500 Time Machine Inputs</p>
+                    <hr class="my-4">
+                    
+                  </div>
+        <div class = "container">
+            <div class = "row">
+                <div class = "col-md-3">
+                    <form action = "/series_data">
+                        <label>Start Year</label><br>
+                        <input name = "start">
+                        <br><br>
+                        <label>End Year</label><br>
+                        <input name = "end">
+                        <br><br>
+                    </div>
+                    <div class = "col-md-6">
+                        <label>Initial Contribution</label><br>
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="1000" value="500" class="slider" id="myRange1" name = "initial_contrib">
+                            <div id = "demo1"></div>
+                        </div>
+                        <br><br>
+                        <label>Annual Contirbution</label><br>
+                        <div class="slidecontainer">
+                            <input type="range" min="1" max="1000" value="500" class="slider" id="myRange2" name = "annual_contrib">
+                            <div id = "demo2"></div>
+                        </div>
+                        <br><br>
+                        
+                </div>
+                    <div class = "col-md-12">
+                            <input type = "submit" value = "Submit" class = "btn btn-primary btn-lg recolor">
+                    </div>
+                </form>
+            </div>
+       
+    </body>
+</html>
+
+<script>
+var slider1 = document.getElementById("myRange1");
+var output1 = document.getElementById("demo1");
+output1.innerHTML = slider1.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider1.oninput = function() {
+  output1.innerHTML = this.value;
+}
+
+var slider2 = document.getElementById("myRange2");
+var output2 = document.getElementById("demo2");
+output2.innerHTML = slider2.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider2.oninput = function() {
+  output2.innerHTML = this.value;
+}
+</script>

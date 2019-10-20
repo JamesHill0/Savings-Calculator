@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 #################################################################################
 #FLASK ROUTING
-#################################################################################
+################################################################################
 
 @app.route('/', methods = ["GET"])
 def index():
@@ -51,7 +51,6 @@ def get_series_data():
             "up_years" : return_proportions[2],
             "down_years" : return_proportions[3]
         }
-
     }
 
     return jsonify(output_params)
