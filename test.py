@@ -1,5 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from statistics import mean
 
 # use creds to create a client to interact with the Google Drive API
 scope = ['https://spreadsheets.google.com/feeds',
@@ -47,11 +48,6 @@ def cumulativeReturnRange(start_bound, end_bound, initial_contribution, annual_c
         running = 0
 
         for row in space:
-            print("YEAR : %s" %(data[row]['year']))
-            print("Return Muliplier: %s" %((1 + data[row]['a_return'])/ 100))
-            print("Adjusted contribution : %s" %(float(data[row]['a_return']) * annual_contribution * running))
-            print("Balance: %s" %balance)
-            print("--")
             balance = ((1 + float(data[row]['a_return'])/100) * balance) + annual_contribution * ((1 + float(data[row]['a_return'])/ 100))
 
         return int(round(balance))
@@ -63,14 +59,55 @@ def maxYearReturn(start_bound, end_bound):
     percent_storage = None
 
     for row in space:
-        print("ROW : %s" %(data[row]))
         if percent_storage == None or float(data[row]['a_return']) > percent_storage:
             percent_storage = float(data[row]['a_return'])
             year_storage = int(data[row]['year'])
         
     return (year_storage, percent_storage)
 
+def minYearReturn(start_bound, end_bound):
+    data = list_of_hashes
+    space = getSampleSpace(start_bound, end_bound)
+    year_storage = None
+    percent_storage = None
+
+    for row in space:
+        if percent_storage == None or float(data[row]['a_return']) < percent_storage:
+            percent_storage = float(data[row]['a_return'])
+            year_storage = int(data[row]['year'])
         
+    return (year_storage, percent_storage)
+
+def avgYearReturn(start_bound, end_bound):
+
+    data = list_of_hashes
+    space = getSampleSpace(start_bound, end_bound)
+    storage = []
+
+    for row in space:
+        storage.append(float(data[row]['a_return']))
+        print(int(data[row]['a_return']))
+        
+    return round(mean(storage),2)
+
+ 
+
+def getReturnProportions(start_bound, end_bound):
+    data = list_of_hashes
+    space = getSampleSpace(start_bound, end_bound)
+    storage = []
+    up_years = 0
+    down_years = 0
+
+    for row in space:
+        if int(data[row]['a_return']) > 0:
+            up_years += 1
+        elif int(data[row]['a_return']) < 0:
+            down_years += 1
+        else:
+            pass
+    
+    return (round(round((up_years / (up_years + down_years)),4) * 100,2)  , round(round(1 - (up_years / (up_years +down_years)), 4) * 100,2), up_years, down_years)
 
 
 def testCumulativeReturn():
@@ -105,11 +142,18 @@ def testMaxYearReturn():
     end_bound = 2018
     print(maxYearReturn(start_bound, end_bound))
 
+def testMinYearReturn():
+    start_bound = 1950
+    end_bound = 2018
+    print(maxYearReturn(start_bound, end_bound))
+
 
 def main():
     #testCumulativeReturn()
     #testCumulativeReturnRange()
-    testMaxYearReturn()
+    #testMaxYearReturn()
+    #testMinYearReturn()
+    pass
 
 if __name__ == "__main__":
     main()
