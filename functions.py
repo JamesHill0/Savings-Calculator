@@ -138,6 +138,7 @@ def returnPercentages(start_bound, end_bound, initial_contribution, annual_contr
         "initial_contribution_return" : round(initial_contrib_running * 100, 2), 
         "annual_contribution_return" : round(annual_contrib_running * 100, 2)
     }
+    ##This makes cumulative return redundant. When implementing api calls with this method, be sure to refactor
 
 def testReturnPercentages():
     print(returnPercentages(2000, 2018, 1000, 1000))
