@@ -19,13 +19,13 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/series_data', methods = ["POST", "GET"])
+@app.route('/series_data', methods = ["POST"])
 def get_series_data():
     authentication_status = True
-    start = int(request.args['start'])
-    end = int(request.args['end'])
-    initial_contrib = int(request.args['initial_contrib'])
-    annual_contrib = int(request.args['annual_contrib'])
+    start = int(request.form['start'])
+    end = int(request.form['end'])
+    initial_contrib = int(request.form['initial_contrib'])
+    annual_contrib = int(request.form['annual_contrib'])
     
     end_amount = cumulativeReturnRange(start, end, initial_contrib, annual_contrib)
     maxReturnData = maxYearReturn(start,end)
@@ -50,8 +50,15 @@ def get_series_data():
             "percent_down_years" : return_proportions[1],
             "up_years" : return_proportions[2],
             "down_years" : return_proportions[3]
+        },
+        "contribution" : {
+            "total_contribution" : initial_contrib + (annual_contrib * (end - start))
+            "return_percent_on_initial" : 
+            "return_percent_on_annual" : 
+            "return_percent_on_total" :
         }
     }
+    print(output_params)
 
     return jsonify(output_params)
 

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <style>
                 .recolor{
                     background-color: #333 !important;
@@ -43,53 +44,432 @@
                     background: #4CAF50; /* Green background */
                     cursor: pointer; /* Cursor on hover */
                     }
+
+                    :root {
+  --primary: #3bb18d;
+  --primary-pressed: #17906E;
+  --primary-hover-color: #f5fdfc;
+  --third-color: #616a75;
+  --primary-text-color: #465A6A;
+  --secondary-text-color: #723011;
+  --background-color: #f5fdfc;
+}
+
+/* ==========================================================================
+   Body
+   ========================================================================== */
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-color) !important;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+  font-family: SFProDisplay-Regular;
+  letter-spacing: 1px;
+}
+
+.centered {
+  height: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+/* ==========================================================================
+      Navbar
+      ========================================================================== */
+/* .active {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  border-radius: 14px;
+}
+
+.navbar-default {
+  -webkit-transition: 500ms ease;
+  transition: 500ms ease;
+  background: transparent;
+}
+
+.navbar-default.scrolled {
+  background: #207d65;
+}
+
+.nav-item:hover {
+  color: white !important;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.nav-item:active {
+  color: white !important;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+} */
+.navbar-default {
+  background: white !important;
+  -webkit-box-shadow: -1px 0px 10px -1px rgba(67, 98, 83, 0.1);
+  box-shadow: -1px 0px 17px -1px rgba(67, 98, 83, 0.1);
+  -webkit-transition: 500ms ease;
+  transition: 500ms ease;
+  margin: 0 !important;
+}
+
+.navbar-default.scrolled {
+  background: #207d65;
+}
+
+.nav-item {
+  color: #A6B0B7 !important;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.nav-item-active {
+  color: #3AB685 !important;
+  font-weight: 600;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.nav-item:hover {
+  color: #3AB685 !important;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.nav-item:active {
+  color: #3AB685 !important;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+            Navbar
+            ========================================================================== */
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.center-content-child {
+  display: inline-block;
+}
+
+.logo-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+.title {
+  font-family: SFProDisplay-Medium;
+  margin: 0px 0px 30px 0px;
+  font-size: 22px;
+}
+
+/*------------------------------------
+Card
+------------------------------------*/
+.calc-card {
+  background-color: white;
+  padding: 20px 20px 40px 20px;
+  height: 720px;
+  margin-top: 5%;
+  border-radius: 41px;
+  box-shadow: 7px 12px 50px 0 rgba(93, 103, 113, 0.23);
+  background-color: #ffffff;
+  border: 0 none;
+  font-size: 16px;
+}
+
+.calc-card-md {
+  background-color: white;
+  padding: 20px;
+  width: 420px;
+  height: 200px;
+  margin-top: 100px;
+  margin-bottom: 300px;
+  border-radius: 41px;
+  -webkit-box-shadow: 0 20px 80px 0 rgba(14, 56, 48, 0.37);
+  box-shadow: 0 20px 80px 0 rgba(14, 56, 48, 0.37);
+  background-color: #ffffff;
+  border: 0 none;
+  font-size: 16px;
+}
+
+.calc-card-title {
+  font-size: 27px;
+  font-weight: 600;
+  text-align: center;
+  color: #465a6a;
+}
+
+.calc-card-subtitle {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #8597a5;
+}
+
+/*------------------------------------
+Calculate Button
+------------------------------------*/
+.btn {
+  background-color: var(--primary) !important;
+  color: white !important;
+  outline: 0 none !important;
+  border: none !important;
+  text-decoration: none !important;
+}
+
+.btn-primary:focus {
+  outline: 0 none !important;
+  -webkit-box-shadow: 0 none !important;
+  box-shadow: 0 none !important;
+}
+
+.btn-os {
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  padding: 10px 5px;
+  text-align: center;
+  margin: 20px 0px 0px 0px;
+  text-decoration: none;
+  display: inline-block;
+  width: 325px;
+  height: 50px;
+  border-radius: 14px;
+  -webkit-box-shadow: 0 7px 20px 0 rgba(28, 171, 131, 0.38);
+  box-shadow: 0 7px 20px 0 rgba(28, 171, 131, 0.38);
+  background-color: #1cab83;
+  font-size: 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-os:hover {
+  background-color: var(--primary-pressed);
+}
+
+.btn-os:active {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.btn-calculator {
+  width: 100%;
+}
+
+.btn-reset {
+  width: 100%;
+  background-color: #233F48 !important;
+  margin: 0px 0px 10px 0px;
+}
+
+.btn-reset:hover {
+  background-color: #233F48 !important;
+}
+
+.label-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.result-wrapper {
+  text-align: center;
+}
+
+.result-title {
+  text-align: center;
+  width: 100%;
+  height: 28px;
+  font-weight: 400;
+  font-size: 22px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  text-align: center;
+  color: #465a6a;
+}
+
+.estimated-title {
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  font-size: 34px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.8px;
+  text-align: center;
+  color: #465a6a;
+  margin-top: 10px;
+}
+
+.disclosure-tag {
+  text-align: center;
+  width: 220px;
+  height: 24px;
+  font-size: 10.3px;
+  font-weight: normal;
+  letter-spacing: -0.2px;
+  text-align: center;
+  color: #8597a5;
+  display: inline-block;
+}
+
+/* ==========================================================================
+         Browser Upgrade Prompt
+         ========================================================================== */
+/* ==========================================================================
+            Browser Upgrade Prompt
+            ========================================================================== */
                 </style>
     <link rel="stylesheet" type="text/css" href="../static/styles.css" media="screen" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
     <body>
-            <div class="jumbotron">
-                    <h1 class="display-4">Troutwood API Prototype</h1>
-                    <p class="lead">Use the input fields below to test the Troutwood S&P500 Time Machine Inputs</p>
-                    <hr class="my-4">
-                    
-                  </div>
+            
         <div class = "container">
             <div class = "row">
-                <div class = "col-md-3">
-                    <form action = "/series_data">
-                        <label>Start Year</label><br>
-                        <input name = "start">
-                        <br><br>
-                        <label>End Year</label><br>
-                        <input name = "end">
-                        <br><br>
+                <div class = "col-md-6 col-xs-12">
+                        <div class="calc-card">
+                            <div class="calc-card-title text-left">S&P 500 Time Machine</div>
+                                <div class="calc-card-subtitle mt-1">
+                                    <div class = "text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                    <div class="font-italic text-left" style= "margin-top: .5em; margin-bottom: .5em;">1926-2018</div>
+                                </div>
+                                    <p id = "warning" class = "text-left" style = "color: orange;"><span style = "color: transparent !important;">S</span></p>
+                                        <form id = "tm-form" action = "/series_data">
+                                        <div class="form-group">
+                                          <!-- starting value -->
+                                            <label>Start Year</label><br>
+                                            <div class="slidecontainer">
+                                              <input type="range" min="1926" max="2018" value="1926" class="slider" id="myRange1" name = "start" required>
+                                              <div id = "demo1"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <!-- starting value -->
+                                          <label>End Year</label><br>
+                                          <div class="slidecontainer">
+                                            <input type="range" min="1926" max="2018" value="2018" class="slider" id="myRange2" name = "end" required>
+                                            <div id = "demo2"></div>
+                                          </div>
+                                        </div>
+                                    <!-- investment years -->
+                                    <div class="form-group">
+                                      <label>Initial Contribution</label><br>
+                                      <input type = "number" value="50000" class="form-control" name = "initial_contrib" required>
+                                    </div>
+                                    <!-- monthly contribution -->
+                                    <div class="form-group">
+                                      <label>Annual Contirbution</label><br>
+                                      <input type = "number" value="5000" class="form-control" name = "annual_contrib" required>
+                                    </div>
+                                    <!-- calculator btn -->
+                                    <div class="form-group">
+                                        <input type = "submit" value = "Submit" class = "btn-os btn-calculator">
+                                    </div>
+                                </form>
+                                  
+        
+                    
                     </div>
-                    <div class = "col-md-6">
-                        <label>Initial Contribution</label><br>
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="1000" value="500" class="slider" id="myRange1" name = "initial_contrib">
-                            <div id = "demo1"></div>
-                        </div>
-                        <br><br>
-                        <label>Annual Contirbution</label><br>
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="1000" value="500" class="slider" id="myRange2" name = "annual_contrib">
-                            <div id = "demo2"></div>
-                        </div>
-                        <br><br>
-                        
+                    <br><br>
+
                 </div>
-                    <div class = "col-md-12">
-                            <input type = "submit" value = "Submit" class = "btn btn-primary btn-lg recolor">
+                <div class = "col-md-6 col-xs-12">
+                        <div class = "hidden">
+                        <div class="calc-card">
+                                <div id="calc-form-wrapper">
+                                    <div class="calc-card-title text-left">Results</div>
+                                    <div class="calc-card-subtitle mt-1 mb-5">
+                                        <div class = "text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                        <div class="font-italic text-left" style= "margin-top: .5em;">1926-2018</div>
+                                    </div>
+                                    
+                                    <form action = "/series_data">
+                                       
+                                        <div class = "col-sm-12 col-md-12">    
+                                            <div class = "form-group">
+                                                <span id = "output_endAmount"></span>
+                                            </div>
+                                        
+                                            <div class="form-group">
+                                                <span id = "output_averageReturn"></span>
+                                            </div>
+    
+                                            <span id = "output_lowestGrowth"></span>
+                                       
+                                            <span id = "output_highestGrowth"></span>
+                                        </div>
+                                        
+                                    
+                                            
+                                    <!-- monthly contribution -->
+                                    
+                                    <!-- calculator btn -->
+                                    
+                                </form>
+                                  
+                              </div>
+        
+                    
                     </div>
-                </form>
+                    <br><br>
+
+                </div>
             </div>
+                </div>
+            </div>
+            
+        </div>
        
     </body>
 </html>
-
 <script>
 var slider1 = document.getElementById("myRange1");
 var output1 = document.getElementById("demo1");
@@ -108,4 +488,49 @@ output2.innerHTML = slider2.value; // Display the default slider value
 slider2.oninput = function() {
   output2.innerHTML = this.value;
 }
+
+</script>
+<!--Keeping the AJAX request in a seperate block prevents it 
+    from interfering with the number readout from sliders-->
+<style>
+#output_end_amount{
+    display:none;
+}
+</style>
+<script>
+    
+    $(".hidden").hide()
+    $(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            $("#warning").html('<span style = "color: transparent !important;">S</span>')
+
+            if( parseInt($('#y1').val()) > parseInt($('#y2').val())) {
+                console.log("error");
+                $("#warning").html("Error: Start Year must be lower than End Year").fadeIn("slow");
+            }
+            else{
+                $.ajax({
+                    type: 'post',
+                    url: '/series_data',
+                    data: $('form').serialize(),
+                    success: function (response) {
+                        $(".hidden").hide()
+                        var parsedEndAmount = '<label>If you made this investment, you would have earned</label><h1>$' + response["end_amount"].toLocaleString(); + "</h1>"
+                        var parsedAverageReturn = '<label>The average annual growth of the S&P 500 during this period was</label><h3>' + response["avg_return"].toLocaleString() + "%</h3>";
+                        var parsedHighestGrowth = '<label>Maximum Return</label><h3>' + response["max_return"]["amount"].toLocaleString() + "% (" + response["max_return"]["year"] + ")</h3>";
+
+                        var parsedHighestGrowth = '<label>Maximum Return</label><h3>' + response["max_return"]["amount"].toLocaleString() + "% (" + response["max_return"]["year"] + ")</h3>";
+                        var parsedLowestGrowth = '<label>Minimum Return</label><h3>' + response["min_return"]["amount"].toLocaleString() + "% (" + response["min_return"]["year"] + ")</h3>";
+
+                        $("#output_endAmount").hide().html(parsedEndAmount).fadeIn("slow");
+                        $("#output_averageReturn").hide().html(parsedAverageReturn).fadeIn("slow");
+                        $("#output_lowestGrowth").hide().html(parsedLowestGrowth).fadeIn("slow");
+                        $("#output_highestGrowth").hide().html(parsedHighestGrowth).fadeIn("slow");
+                        $(".hidden").fadeIn()
+                    }
+                });
+            };
+        });
+    });
 </script>

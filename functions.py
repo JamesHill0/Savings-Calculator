@@ -88,9 +88,7 @@ def avgYearReturn(start_bound, end_bound):
         storage.append(float(data[row]['a_return']))
         print(int(data[row]['a_return']))
         
-    return round(mean(storage),2)
-
- 
+    return round(mean(storage), 2)
 
 def getReturnProportions(start_bound, end_bound):
     data = list_of_hashes
@@ -109,6 +107,40 @@ def getReturnProportions(start_bound, end_bound):
     
     return (round(round((up_years / (up_years + down_years)),4) * 100,2)  , round(round(1 - (up_years / (up_years +down_years)), 4) * 100,2), up_years, down_years)
 
+def returnPercentages(start_bound, end_bound, initial_contribution, annual_contribution):
+    """
+        Returns % _return on initial, annual, and C(initial && annual)
+    """
+    data = list_of_hashes
+    space = getSampleSpace(start_bound, end_bound)
+    annual_contrib_running = 0
+    initial_contrib_running = initial_contribution
+    base = 0
+    balance = initial_contribution
+    
+    for row in space:
+        annual_contrib_running = (annual_contribution+ annual_contrib_running) * ((1 + float(data[row]['a_return'])/ 100))
+        initial_contrib_running = initial_contrib_running * (1 + (float(data[row]['a_return'])/100))
+        balance = ((1 + float(data[row]['a_return'])/100) * balance) + annual_contribution * ((1 + float(data[row]['a_return'])/ 100))
+        base += 1
+        total_contrib = initial_contribution + base * annual_contribution
+
+    if annual_contrib_running != 0:
+        annual_contrib_running = ((annual_contrib_running) - annual_contribution * base) / total_contrib
+
+    if initial_contrib_running != 0:
+        initial_contrib_running = ((initial_contrib_running) - initial_contribution) / initial_contribution
+
+    return {
+        "total_contribution" : total_contrib, 
+        "end_balance" : round(balance),
+        "total_return_percent" : round(100 * (balance - total_contrib) / total_contrib,2), 
+        "initial_contribution_return" : round(initial_contrib_running * 100, 2), 
+        "annual_contribution_return" : round(annual_contrib_running * 100, 2)
+    }
+
+def testReturnPercentages():
+    print(returnPercentages(2000, 2018, 1000, 1000))
 
 def testCumulativeReturn():
     years_ago = 2
@@ -153,6 +185,7 @@ def main():
     #testCumulativeReturnRange()
     #testMaxYearReturn()
     #testMinYearReturn()
+    testReturnPercentages()
     pass
 
 if __name__ == "__main__":
