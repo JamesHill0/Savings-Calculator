@@ -27,15 +27,15 @@ def get_series_data():
     initial_contrib = int(request.form['initial_contrib'])
     annual_contrib = int(request.form['annual_contrib'])
     
-    end_amount = cumulativeReturnRange(start, end, initial_contrib, annual_contrib)
     maxReturnData = maxYearReturn(start,end)
     minReturnData = minYearReturn(start,end)
     avg_return = avgYearReturn(start, end)
     return_proportions = getReturnProportions(start, end)
+    return_percentages = getReturnPercentages(start, end, initial_contrib, annual_contrib)
 
     output_params = {
         "authentication_status" : authentication_status,
-        "end_amount" : end_amount,
+        "end_amount" : return_percentages["end_balance"],
         "avg_return" : avg_return,
         "max_return" : {
             "year" : maxReturnData[0],
@@ -51,12 +51,7 @@ def get_series_data():
             "up_years" : return_proportions[2],
             "down_years" : return_proportions[3]
         },
-        "contribution" : {
-            "total_contribution" : initial_contrib + (annual_contrib * (end - start))
-            "return_percent_on_initial" : 
-            "return_percent_on_annual" : 
-            "return_percent_on_total" :
-        }
+        "contribution" : return_percentages
     }
     print(output_params)
 

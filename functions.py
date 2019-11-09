@@ -107,7 +107,7 @@ def getReturnProportions(start_bound, end_bound):
     
     return (round(round((up_years / (up_years + down_years)),4) * 100,2)  , round(round(1 - (up_years / (up_years +down_years)), 4) * 100,2), up_years, down_years)
 
-def returnPercentages(start_bound, end_bound, initial_contribution, annual_contribution):
+def getReturnPercentages(start_bound, end_bound, initial_contribution, annual_contribution):
     """
         Returns % _return on initial, annual, and C(initial && annual)
     """
@@ -141,7 +141,7 @@ def returnPercentages(start_bound, end_bound, initial_contribution, annual_contr
     ##This makes cumulative return redundant. When implementing api calls with this method, be sure to refactor
 
 def testReturnPercentages():
-    print(returnPercentages(2000, 2018, 1000, 1000))
+    print(getReturnPercentages(2000, 2018, 1000, 1000))
 
 def testCumulativeReturn():
     years_ago = 2

@@ -392,26 +392,36 @@ Calculate Button
                         <div class = "hidden">
                         <div class="calc-card">
                                 <div id="calc-form-wrapper">
-                                    <div class="calc-card-title text-left">Results</div>
-                                    <div class="calc-card-subtitle mt-1 mb-5">
-                                        <div class = "text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                        <div class="font-italic text-left" style= "margin-top: .5em;">1926-2018</div>
-                                    </div>
-                                    
-                                    <form action = "/series_data">
-                                       
-                                        <div class = "col-sm-12 col-md-12">    
-                                            <div class = "form-group">
-                                                <span id = "output_endAmount"></span>
-                                            </div>
+                                    <div class="calc-card-title text-left mb-4">Results</div>
+                                
+                                       <div class = "row">
+                                        <div class = "col-md-12 col-sm-12">    
+                                          <div class = "form-group">
+                                              <span id = "output_endAmount"></span>
+                                          </div>
+
+                                          <div class="form-group">
+                                              <span id = "output_averageReturn"></span>
+                                          </div>
+                                          <hr>
+                                        </div>
                                         
-                                            <div class="form-group">
-                                                <span id = "output_averageReturn"></span>
-                                            </div>
-    
-                                            <span id = "output_lowestGrowth"></span>
-                                       
-                                            <span id = "output_highestGrowth"></span>
+                                        <div class = "col-md-6 col-sm-6 col-xs-6">
+                                          <span id = "output_initialContribReturn"></span>
+                                          <br>
+                                          <span id = "output_lowestGrowth"></span>
+                                          <br>
+                                          <span id = "output_downYears"></span>
+                                        </div>
+                                        <div class = "col-md-6 col-sm-6 col-xs-6">
+                                          <span id = "output_annualContribReturn"></span>
+                                          <br>
+                                          <span id = "output_highestGrowth"></span>
+                                          <br>
+                                          <span id = "output_upYears"></span>
+                                        </div>
+                                       </div>
+                                        
                                         </div>
                                         
                                     
@@ -419,8 +429,7 @@ Calculate Button
                                     <!-- monthly contribution -->
                                     
                                     <!-- calculator btn -->
-                                    
-                                </form>
+                             
                                   
                               </div>
         
@@ -430,8 +439,12 @@ Calculate Button
 
                 </div>
             </div>
-                </div>
+
+          
+
             </div>
+          </div>
+
             
         </div>
        
@@ -482,18 +495,26 @@ slider2.oninput = function() {
                     url: '/series_data',
                     data: $('form').serialize(),
                     success: function (response) {
+                        console.log(response)
                         $(".hidden").hide()
-                        var parsedEndAmount = '<label>If you made this investment, you would have earned</label><h1>$' + response["end_amount"].toLocaleString(); + "</h1>"
+                        var parsedEndAmount = '<label>If you made this investment, you would have earned</label><h2>$' + response["end_amount"].toLocaleString(); + "</h2>"
                         var parsedAverageReturn = '<label>The average annual growth of the S&P 500 during this period was</label><h3>' + response["avg_return"].toLocaleString() + "%</h3>";
-                        var parsedHighestGrowth = '<label>Maximum Return</label><h3>' + response["max_return"]["amount"].toLocaleString() + "% (" + response["max_return"]["year"] + ")</h3>";
+                        var parsedHighestGrowth = '<label>Maximum Return</label><h5>' + response["max_return"]["amount"].toLocaleString() + "% (" + response["max_return"]["year"] + ")</h5>";
+                        var parsedLowestGrowth = '<label>Minimum Return</label><h5>' + response["min_return"]["amount"].toLocaleString() + "% (" + response["min_return"]["year"] + ")</h5>";
+                        var parsedInitialContribReturn = '<label>Initial Contribution Return</label><h5>' + response["contribution"]["initial_contribution_return"].toLocaleString() + "% </h5>";
+                        var parsedAnnualContribReturn = '<label>Annual Contribution Return</label><h5>' + response["contribution"]["annual_contribution_return"].toLocaleString() + "% </h5>";
 
-                        var parsedHighestGrowth = '<label>Maximum Return</label><h3>' + response["max_return"]["amount"].toLocaleString() + "% (" + response["max_return"]["year"] + ")</h3>";
-                        var parsedLowestGrowth = '<label>Minimum Return</label><h3>' + response["min_return"]["amount"].toLocaleString() + "% (" + response["min_return"]["year"] + ")</h3>";
+                        var parsedUpYears = '<label>Up Years</label><h5>' + response["growth_proportions"]["percent_up_years"].toLocaleString() + "% </h5>";
+                        var parsedDownYears = '<label>Down Years</label><h5>' + response["growth_proportions"]["percent_down_years"].toLocaleString() + "% </h5>";
 
                         $("#output_endAmount").hide().html(parsedEndAmount).fadeIn("slow");
                         $("#output_averageReturn").hide().html(parsedAverageReturn).fadeIn("slow");
                         $("#output_lowestGrowth").hide().html(parsedLowestGrowth).fadeIn("slow");
                         $("#output_highestGrowth").hide().html(parsedHighestGrowth).fadeIn("slow");
+                        $("#output_initialContribReturn").hide().html(parsedInitialContribReturn).fadeIn("slow");
+                        $("#output_annualContribReturn").hide().html(parsedAnnualContribReturn).fadeIn("slow");
+                        $("#output_upYears").hide().html(parsedUpYears).fadeIn("slow");
+                        $("#output_downYears").hide().html(parsedDownYears).fadeIn("slow");
                         $(".hidden").fadeIn()
                     }
                 });
