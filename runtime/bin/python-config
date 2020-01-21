@@ -1,4 +1,4 @@
-#!/Users/alebel/Desktop/troutwood-api/runtime/bin/python
+#!/Users/alebml/Desktop/cwd/troutwood-api/runtime/bin/python
 
 import sys
 import getopt

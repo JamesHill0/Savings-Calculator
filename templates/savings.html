@@ -347,7 +347,7 @@ Calculate Button
                     <div class="font-italic text-left" style= "margin-top: .5em; margin-bottom: .5em;">1926-2018</div>
                 </div>
                     <p id = "warning" class = "text-left" style = "color: orange;"><span style = "color: transparent !important;">S</span></p>
-              <form id = "tm-form" action = "http://localhost:5000/savings_calculator", method=  "POST">
+              <form id = "tm-form" action = "/savings_calculator", method=  "POST">
                 <div class="form-group">
                   <select id = "selectState" class="js-example-basic-single" name = "state"  data-width="100%">
                     <option>California</option>
@@ -377,12 +377,18 @@ Calculate Button
                 </div>
 
                 <div class="slidecontainer">
-                  <label>Percent of Income Invested</label>
-                  <input type="range" min="0" max="100" value="5" class="slider" id="myRange1" name = "percent_income" required>
+                  <label>Number of Dependents</label>
+                  <input type = "number" value="0" class="form-control" name = "dependents">
+                </div>
+
+                <br>
+                <div class="slidecontainer">
+                  <label>Number of Bedrooms</label>
+                  <input type="range" min="0" max="4" value="0" class="slider" id="myRange1" name = "number_bedrooms" required>
                   <div id = "demo1"></div>
                 </div>
 
-                <!-- calculator btn -->
+                <!--2calculator btn -->
                 <div class="form-group">
                     <input type = "submit" value = "Submit" class = "btn-os btn-calculator">
                 </div>
@@ -398,16 +404,49 @@ Calculate Button
                          <div class = "row">
                           <div class = "col-md-12 col-sm-12">    
                             <div class = "form-group">
-                              <p>Assuming 3% annual wage growth, 5% income contribution, and 10% annual market returns--</p>
+
                               <h4 id = "output_statement"></h4>
+                              <div class = "form-group">
+                                <p><div id = "income_summary"></div></p>
+                              </div>
+                              <h4>Monthly Expense Breakdown</h4>
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <td>Rent</td>
+                                  <td><div id = "rent"></div></td>
+                                </tr>
+                                <tr>
+                                  <td>Utilities</td>
+                                  <td><div id = "utilities"></div></td>
+                                </tr>
+                                <tr>
+                                  <td>Transportation</td>
+                                  <td><div id = "transportation"></div></td>
+                                </tr>
+                                <tr>
+                                  <td>Insurance</td>
+                                  <td><div id = "insurance"></div></td>
+                                </tr>
+                                <tr>
+                                  <td>Food</td>
+                                  <td><div id = "food"></div></td>
+                                </tr>
+                                <tr>
+                                  <td><b>Total</b></td>
+                                  <td><div id = "monthly_expenses"></div></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p><div id = "investment-amount"></div></p>
+
+                            <div class = "form-group">
+                              <p><div id = "after-savings"></div></p>
                             </div>
-                            <div class="form-group">
-                              <span id = "output_averageReturn"></span>
                             </div>
-                            <div class="form-group">
-                              <span id = "total_value"></span>
-                            </div>
-                            <hr>
+                           
+                            <br>
+                            
                           </div>
                          </div>
                           </div>
@@ -481,15 +520,31 @@ Calculate Button
         $("#warning").html('<span style = "color: transparent !important;">S</span>')
           $.ajax({
               type: 'post',
-              url: 'http://localhost:5000/savings_calculator',
+              url: '/savings_calculator',
               data: $('form').serialize(),
               success: function (response) {
                   console.log(response);
                   var output_statement = response["output_statement"]
+                  var rent = response["rent"]
+                  var transportation = response["transportation"]
+                  var insurance = response["insurance"]
+                  var utilities = response["utilities"]
+                  var food = response["food"]
                   var total_value = "<p>Over the course of " + response["years"] + " years, you would earn approximately</p> <h4>$" + response["income"].toLocaleString() +"</h4>"
+                  var investment_amount = "Based on past market performance, to meet your savings goal, you need to invest a minimum of $" + response["monthly_savings"] + " per month (~" + response["percentage"] + "% of your post-expense income)."
+                  var monthly_expenses = response["monthly_expenses"]
+                  var income_summary = "The average monthly income for " + response["career"] + " in " + response["state"] + " is $" + response["monthly_income"]
 
                   $("#output_statement").html(output_statement).fadeIn("slow");
                   $("#total_value").html(total_value).fadeIn("slow");
+                  $("#rent").html(rent).fadeIn("slow");
+                  $("#utilities").html(utilities).fadeIn("slow");
+                  $("#transportation").html(transportation).fadeIn("slow");
+                  $("#insurance").html(insurance).fadeIn("slow");
+                  $("#food").html(food).fadeIn("slow");
+                  $("#investment-amount").html(investment_amount).fadeIn("slow");
+                  $("#monthly_expenses").html(monthly_expenses).fadeIn("slow");    
+                  $("#income_summary").html(income_summary).fadeIn("slow");                                   
                   $(".hidden").fadeIn();
 
               }
@@ -506,15 +561,6 @@ Calculate Button
   // Update the current slider value (each time you drag the slider handle)
   slider1.oninput = function() {
     output1.innerHTML = this.value;
-  }
-  
-  var slider2 = document.getElementById("myRange2");
-  var output2 = document.getElementById("demo2");
-  output2.innerHTML = slider2.value; // Display the default slider value
-  
-  // Update the current slider value (each time you drag the slider handle)
-  slider2.oninput = function() {
-    output2.innerHTML = this.value;
   }
   
   </script>

@@ -70,24 +70,33 @@ def savings_calculator():
     _state = request.form['state']
     _county = request.form['county']
     _job = request.form['job']
-    _percent = request.form['percent_income']
 
     bls_data = csv.reader(open('savings_calculator.csv', "r"), delimiter=",")
     hud_data = csv.reader(open('hud-data.csv', "r"), delimiter=",")
+    
+    hudRow = getHUDRow(_county, hud_data)
+    blsRow = getBLSRow(_state, _job, bls_data)
 
     investment_goal = int(request.form['investment_goal'])
     years = int(request.form['years'])
+    bedrooms = int(request.form['number_bedrooms'])
+    monthly_rent = int(hudRow[3 + bedrooms])
+    expense_multiplier = int(request.form['dependents'])
+    """
+        Note: Change this when you change how jobs data is pulled.
+    """
     
-    print(_state)
-    print(_county)
-    print(_job)
+    utilities_expenses = int(monthly_rent / 4)
+    transportation_expenses = int(monthly_rent / 5)
+    insurance_expenses = int(monthly_rent / 7)
+    food_expenses = int(monthly_rent / 2)
+    misc_expenses = int(monthly_rent / 2)
+    monthly_expenses = monthly_rent + utilities_expenses + transportation_expenses + food_expenses + insurance_expenses + food_expenses + misc_expenses
 
-    hudRow = getHUDRow(_county, hud_data)
-    blsRow = getBLSRow(_state, _job, bls_data)
-    savings_output = goalMade(int(blsRow[26].replace(',', '')) * (int(_percent) / 100), investment_goal, years)
-    print(blsRow)
+    savings_output = goalMade(int(blsRow[26].replace(',', '')) - (expense_multiplier * (monthly_expenses + 1)) - monthly_rent, investment_goal, years)
+
     if savings_output[1] == True:
-        output_statement = "You would achieve your savings goal in approximately " + str(savings_output[2]) + " years."
+        output_statement = "You're likely to achieve your savings goal."
     else:
         output_statement = "It's unlikely you would achieve your savings goal"
 
@@ -97,7 +106,18 @@ def savings_calculator():
         "amount_saved" : int(savings_output[0]),
         "output_statement" : output_statement,
         "years" : years,
-        "income" : int(blsRow[26].replace(',', '')) * years
+        "income" : int(blsRow[26].replace(',', '')) * years,
+        "rent" : "$" + str(monthly_rent),
+        "utilities" : "$" + str(utilities_expenses),
+        "transportation" : "$" + str(transportation_expenses),
+        "insurance" : "$" + str(insurance_expenses),
+        "food" : "$" + str(food_expenses),
+        "monthly_savings" : str(int((investment_goal / years) / 12)),
+        "monthly_expenses": "$" + str(monthly_expenses),
+        "career": _job,
+        "state": _state,
+        "monthly_income" : int(int(blsRow[26].replace(",", "")) /12),
+        "percentage" : int((int((investment_goal / years) / 12) / int(int(blsRow[26].replace(",", "")) /12)) * 100)
     }
     print(output_params)
 

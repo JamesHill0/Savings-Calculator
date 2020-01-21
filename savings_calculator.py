@@ -76,9 +76,9 @@ def testGetHUDLocationInputs():
     print(getHUDLocationInputs(hud_data))
 
 def main():
-    testGetBLSRow()
+    #testGetBLSRow()
     testGetHUDRow()
-    testGetBLSCareerInputs()
+    #testGetBLSCareerInputs()
     #testGetBLSLocationInputs()
     #testGetHUDLocationInputs()
 

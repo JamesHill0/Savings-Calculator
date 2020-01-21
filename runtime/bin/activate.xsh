@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/Users/alebel/Desktop/troutwood-api/runtime"
+$VIRTUAL_ENV = r"/Users/alebml/Desktop/cwd/troutwood-api/runtime"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]
