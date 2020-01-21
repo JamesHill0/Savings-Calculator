@@ -66,6 +66,9 @@ def get_series_data():
 
 @app.route('/savings_calculator', methods = ["POST"])
 def savings_calculator():
+    """
+        Note: Calculations for expenses are a function of rent, because at time of composition, there is no way to pull the other expense data.
+    """
     authentication_status = True
     _state = request.form['state']
     _county = request.form['county']
